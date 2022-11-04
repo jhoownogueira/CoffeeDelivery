@@ -10,8 +10,56 @@ import {
 } from "phosphor-react";
 import { CoffeeCard, HomeContainer, IconColors } from "./styles";
 import cupOfCoffeImg from "../../assets/cup-of-coffee.png";
+import React, { useContext, useEffect, useState } from "react";
+import { CoffesContext } from "../../contexts/CoffesContext";
+
+interface CoffeProps {
+  id: number;
+  photo: string;
+  name: string;
+  description: string;
+  categories: string[];
+  value: number;
+  amount: number;
+}
 
 export function Home() {
+  const { setCoffesCart } = useContext(CoffesContext);
+  const [coffesList, setCoffesList] = useState<CoffeProps[]>(coffes);
+
+  useEffect(() => {
+    const coffestoCart = coffesList.filter((coffee) => {
+      if (coffee.amount > 0) return coffee;
+    });
+    setCoffesCart(coffestoCart);
+  }, [coffesList]);
+
+  function addAmount(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    const idCoffee = parseInt(event.currentTarget.value);
+
+    const NewcoffesList = coffesList.map((coffee) => {
+      if (idCoffee === coffee.id) coffee.amount = coffee.amount + 1;
+      return coffee;
+    });
+
+    setCoffesList(NewcoffesList);
+  }
+  function subAmount(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    const idCoffee = parseInt(event.currentTarget.value);
+
+    const NewcoffesList = coffesList.map((coffee) => {
+      if (idCoffee === coffee.id) {
+        coffee.amount = coffee.amount - 1;
+      }
+      if (coffee.amount < 0) {
+        coffee.amount = 0;
+      }
+      return coffee;
+    });
+
+    setCoffesList(NewcoffesList);
+  }
+
   return (
     <HomeContainer>
       <div className="section_home">
@@ -55,7 +103,7 @@ export function Home() {
       <div className="section_coffees">
         <h2>Nossos cafés</h2>
         <div className="coffees_grid">
-          {coffes.map((coffe) => {
+          {coffesList.map((coffe) => {
             return (
               <CoffeeCard>
                 <div className="imgCoffee">
@@ -75,11 +123,11 @@ export function Home() {
                   </div>
                   <div className="cart">
                     <div className="units">
-                      <button>
+                      <button onClick={subAmount} value={coffe.id}>
                         <Minus size={14} weight="bold" />
                       </button>
-                      <span>1</span>
-                      <button>
+                      <span>{coffe.amount}</span>
+                      <button onClick={addAmount} value={coffe.id}>
                         <Plus size={14} weight="bold" />
                       </button>
                     </div>

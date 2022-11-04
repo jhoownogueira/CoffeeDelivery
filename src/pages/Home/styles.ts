@@ -6,6 +6,7 @@ export const HomeContainer = styled.section`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 6rem 0 0;
 
   .section_home {
     width: 100%;

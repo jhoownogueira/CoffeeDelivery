@@ -6,10 +6,21 @@ export const HeaderContainer = styled.header`
     display: flex;
     align-items: center;
     justify-content: center;
-    nav {
+
+    .grid {
+        width: 100%;
+        max-width: 72rem;
+        padding: 0 1rem;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        nav {
         display: flex;
         gap: 0.75rem;
         align-items: center;
+    }
     }
 `
 

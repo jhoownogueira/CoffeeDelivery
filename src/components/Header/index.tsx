@@ -1,16 +1,11 @@
 import { MapPin, ShoppingCartSimple } from "phosphor-react";
 import logoImg from "../../assets/logo.svg";
-import { GridResponsiveFlex } from "../../styles/Global";
 import { Cart, HeaderContainer, Locale } from "./styles";
 
 export function Header() {
   return (
     <HeaderContainer>
-      <GridResponsiveFlex
-        direction="row"
-        justify="space-between"
-        align="center"
-      >
+      <div className="grid">
         <img src={logoImg} />
         <nav>
           <Locale>
@@ -22,7 +17,7 @@ export function Header() {
             <span>3</span>
           </Cart>
         </nav>
-      </GridResponsiveFlex>
+      </div>
     </HeaderContainer>
   );
 }

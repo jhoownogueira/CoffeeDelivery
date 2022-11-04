@@ -8,6 +8,7 @@ export const GlobalStyle = createGlobalStyle`
         text-decoration: none;
         box-sizing: border-box;
     }
+
     html {
         font-family: 'Roboto', sans-serif;
         @media (max-width: 1290px) {
@@ -17,17 +18,21 @@ export const GlobalStyle = createGlobalStyle`
             font-size: 87.50%; 
         }
     }
+
     body {
         -webkit-font-smoothing: antialiased;
     }
+
     body, input, textarea, button {
         font-family: 'Roboto', sans-serif;
         font-weight: 400;
         font-size: 1rem;
     }
+
     button {
         cursor: pointer;
     }
+
     img {
         display: block;
         max-width: 100%;
@@ -49,21 +54,40 @@ export const GlobalStyle = createGlobalStyle`
       border-radius: 20px;
     }
 
-`
+    
+    // Titles 
+    h1, h2, h3, h4 {
+        font-family: 'Baloo 2', sans-serif;
+        line-height: 130%;
+    }
 
-interface GridProps {
-    direction: string;
-    justify: string;
-    align: string;
-}
+    h2, h3, h4 {
+        color: ${props => props.theme["base-subtitle"]};
+    }
 
-export const GridResponsiveFlex = styled.div<GridProps>`
-    width: 100%;
-    max-width: 72rem;
-    padding: 0 1rem;
+    h1, h2 {
+        font-weight: 800;
+    }
+ 
+    h3, h4 {
+        font-weight: 700;
+    }
 
-    display: flex;
-    flex-direction: ${props => props.direction};
-    justify-content: ${props => props.justify};
-    align-items: ${props => props.align};
+    h1 {       
+        font-size: 3rem;
+        color: ${props => props.theme["base-title"]};
+    }
+
+    h2 {
+        font-size: 2rem;
+    }
+
+    h3 {
+        font-size: 1.25rem;
+    }
+
+    h4 {
+        font-size: 1.125rem;
+    }
+
 `

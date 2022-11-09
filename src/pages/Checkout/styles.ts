@@ -170,9 +170,13 @@ export const CheckoutContainer = styled.form`
         padding: 2.5rem;
         
         .cart_list {
+          height: 17.8125rem;
+          padding: 0 0.5rem 0 0;
+          
           display: flex;
           flex-direction: column;
           gap: 2rem;
+          overflow: auto;
         }
         
         .totais {

@@ -102,58 +102,36 @@ export function Checkout() {
           <h4>Cafés selecionados</h4>
           <div className="container">
             <div className="cart_list">
-              <CardCoffe>
-                <div className="left">
-                  <div className="imgCoffee">
-                    <img src={imgCoffe1} />
-                  </div>
-                  <div className="info">
-                    <span>Expresso Tradicional</span>
-                    <div className="cart">
-                      <div className="units">
-                        <button>
-                          <Minus size={14} weight="bold" />
-                        </button>
-                        <span>1</span>
-                        <button>
-                          <Plus size={14} weight="bold" />
-                        </button>
+              {coffesCart.map((coffee) => {
+                return (
+                  <CardCoffe>
+                    <div className="left">
+                      <div className="imgCoffee">
+                        <img src={coffee.photo} />
                       </div>
-                      <button>
-                        <Trash size={16} />
-                        Remover
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <strong>R$ 9,90</strong>
-              </CardCoffe>
-              <CardCoffe>
-                <div className="left">
-                  <div className="imgCoffee">
-                    <img src={imgCoffe1} />
-                  </div>
-                  <div className="info">
-                    <span>Expresso Tradicional</span>
-                    <div className="cart">
-                      <div className="units">
-                        <button>
-                          <Minus size={14} weight="bold" />
-                        </button>
-                        <span>1</span>
-                        <button>
-                          <Plus size={14} weight="bold" />
-                        </button>
+                      <div className="info">
+                        <span>{coffee.name}</span>
+                        <div className="cart">
+                          <div className="units">
+                            <button>
+                              <Minus size={14} weight="bold" />
+                            </button>
+                            <span>{coffee.amount}</span>
+                            <button>
+                              <Plus size={14} weight="bold" />
+                            </button>
+                          </div>
+                          <button>
+                            <Trash size={16} />
+                            Remover
+                          </button>
+                        </div>
                       </div>
-                      <button>
-                        <Trash size={16} />
-                        Remover
-                      </button>
                     </div>
-                  </div>
-                </div>
-                <strong>R$ 9,90</strong>
-              </CardCoffe>
+                    <strong>{coffee.value}</strong>
+                  </CardCoffe>
+                );
+              })}
             </div>
             <div className="totais">
               <div className="totais_line">

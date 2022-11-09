@@ -1,4 +1,10 @@
-import { CurrencyDollar, MapPinLine } from "phosphor-react";
+import {
+  Bank,
+  CreditCard,
+  CurrencyDollar,
+  MapPinLine,
+  Money,
+} from "phosphor-react";
 import { CheckoutContainer } from "./styles";
 
 export function Checkout() {
@@ -58,7 +64,27 @@ export function Checkout() {
               </div>
             </div>
             <div className="container_payment">
-              <input type="radio" />
+              <input type="radio" name="payment" id="credito" />
+              <label htmlFor="credito">
+                <div className="content">
+                  <CreditCard size={16} />
+                  CARTÃO DE CRÉDITO
+                </div>
+              </label>
+              <input type="radio" name="payment" id="debito" />
+              <label htmlFor="debito">
+                <div className="content">
+                  <Bank size={16} />
+                  CARTÃO DE DÉBITO
+                </div>
+              </label>
+              <input type="radio" name="payment" id="dinheiro" />
+              <label htmlFor="dinheiro">
+                <div className="content">
+                  <Money size={16} />
+                  DINHEIRO
+                </div>
+              </label>
             </div>
           </div>
         </div>

@@ -162,6 +162,150 @@ export const CheckoutContainer = styled.form`
     .right_container {
       width: 100%;
       max-width: 28rem;
+
+      .container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        padding: 2.5rem;
+        
+        .cart_list {
+          display: flex;
+          flex-direction: column;
+          gap: 2rem;
+        }
+        
+        .totais {
+          display: flex;
+          gap: 0.8rem;
+          flex-direction: column;
+          margin: 1.5rem 0;
+          .totais_line {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            span, p {
+              color: ${props => props.theme["base-text"]}
+            }
+            span {
+              font-size: 0.875rem;
+            }
+            p {
+              font-size: 1rem;
+            }
+            strong {
+              color: ${props => props.theme["base-subtitle"]};
+              font-weight: 700;
+              font-size: 1.25rem;
+            }
+          }
+        }
+
+        button {
+          width: 100%;
+          height: 2.875rem;
+
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: 1px solid transparent;
+          border-radius: 6px;
+          background: ${props => props.theme["primary-color"]};
+
+          font-weight: 700;
+          font-size: 0.875rem;
+          color: ${props => props.theme.white};
+        }
+      }
     }
   }
 `;
+
+
+export const CardCoffe = styled.div`
+  width: 100%;
+  max-width: 23rem;
+  padding: 0.5rem 0.25rem 1.5rem;
+  border-bottom: 1px solid ${props => props.theme["base-button"]};
+
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  .left {
+    display: flex;
+    gap: 1.25rem;
+    align-items: center;
+    .imgCoffee {
+    width: 4rem;
+    height: 4rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    span {
+      line-height: 130%;
+      ${props => props.theme["base-subtitle"]}
+    }
+
+    .cart {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        justify-content: space-between;
+      .units {
+        width: 100%;
+        height: 2rem;
+        padding: 0 0.5rem;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: ${(props) => props.theme["base-button"]};
+        
+        button {
+          border: 0;
+          background: transparent;
+          font-family: "Baloo 2", sans-serif;
+          color: ${(props) => props.theme["secondary-color"]};
+          font-weight: 800;
+          font-size: 1.5rem;
+        }
+        span {
+          line-height: 100%;
+        }
+        }
+
+        button {
+          width: 100%;
+          height: 2rem;
+          padding: 0.375rem 0.5rem;
+          border-radius: 6px;
+          border: 1px solid transparent;
+
+          display: flex;
+          gap: 0.25rem;
+          align-items: center;
+          justify-content: flex-start;
+
+          font-size: 0.75rem;
+          line-height: 100%;
+          color: ${props => props.theme["base-text"]};
+          background: ${props => props.theme["base-button"]};
+
+          svg {
+            color: ${props => props.theme["secondary-color"]};
+          }
+          
+        }
+      } 
+  }
+  }
+`

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const HeaderContainer = styled.header`
     position: fixed;
@@ -49,7 +49,11 @@ export const Locale = styled.div`
     }
 `
 
-export const Cart = styled.div`
+interface CartProps {
+    empty: boolean
+}
+
+export const Cart = styled.div<CartProps>`
     width: 2.375rem;
     height: 2.375rem;
 
@@ -65,8 +69,9 @@ export const Cart = styled.div`
     font-size: 14px;
     line-height: 130%;
     color: ${props => props.theme["primary-color-dark"]};
-
     background: ${props => props.theme["primary-color-light"]};
+
+    cursor: ${props => props.empty ? "not-allowed" : "pointer"};
     span {
         display: flex;
         align-items: center;
@@ -87,5 +92,23 @@ export const Cart = styled.div`
         background: ${props => props.theme["primary-color-dark"]};
         color: ${props => props.theme.white};
     }
+
+    &:before {
+        opacity: 0;
+        content: 'Seu carrinho está vazio!';
+        position: absolute;
+        bottom: -2.5rem;
+        left: 0;
+        width: 210%;
+        background: ${props => props.theme.white};
+        transition: all 0.3s;
+        pointer-events: none;
+    }
+
+    ${props => props.empty ? `&:hover { 
+        &:before {
+            opacity: 1;
+        }
+     }` : ""}
 
 `

@@ -17,12 +17,29 @@ export function Header() {
             <MapPin size={22} weight="fill" />
             <span>Porto Alegre, RS</span>
           </Locale>
-          <NavLink to="/checkout">
-            <Cart>
-              <ShoppingCartSimple size={22} weight="fill" />
-              {coffesCart.length === 0 ? "" : <span>{coffesCart.length}</span>}
-            </Cart>
-          </NavLink>
+          {coffesCart.length === 0 ? (
+            <NavLink to="/">
+              <Cart empty>
+                <ShoppingCartSimple size={22} weight="fill" />
+                {coffesCart.length === 0 ? (
+                  ""
+                ) : (
+                  <span>{coffesCart.length}</span>
+                )}
+              </Cart>
+            </NavLink>
+          ) : (
+            <NavLink to="/checkout">
+              <Cart empty={false}>
+                <ShoppingCartSimple size={22} weight="fill" />
+                {coffesCart.length === 0 ? (
+                  ""
+                ) : (
+                  <span>{coffesCart.length}</span>
+                )}
+              </Cart>
+            </NavLink>
+          )}
         </nav>
       </div>
     </HeaderContainer>

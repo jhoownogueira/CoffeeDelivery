@@ -50,7 +50,7 @@ export const GlobalStyle = createGlobalStyle`
       background: white;
     }
     *::-webkit-scrollbar-thumb {
-      background-color: ${props => props.theme["secondary-color"]};
+      background-color: ${props => props.theme["base-hover"]};
       border-radius: 20px;
     }
 

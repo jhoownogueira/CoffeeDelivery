@@ -11,12 +11,48 @@ import {
 } from "phosphor-react";
 import { CardCoffe, CheckoutContainer } from "./styles";
 
-import imgCoffe1 from "../../assets/Type=Americano.png";
 import { useContext } from "react";
 import { CoffesContext } from "../../contexts/CoffesContext";
+import { EmptyCart } from "../../components/EmptyCart";
 
 export function Checkout() {
-  const { coffesCart } = useContext(CoffesContext);
+  const { coffesCart, setCoffesCart } = useContext(CoffesContext);
+
+  function addAmount(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    const idCoffee = parseInt(event.currentTarget.value);
+
+    const Newcoffes = coffesCart.map((coffee) => {
+      if (idCoffee === coffee.id) coffee.amount = coffee.amount + 1;
+      return coffee;
+    });
+    setCoffesCart(Newcoffes);
+  }
+  function subAmount(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    const idCoffee = parseInt(event.currentTarget.value);
+
+    const Newcoffes = coffesCart.map((coffee) => {
+      if (idCoffee === coffee.id) {
+        coffee.amount = coffee.amount - 1;
+      }
+      if (coffee.amount <= 0) {
+        coffee.amount = 1;
+      }
+      return coffee;
+    });
+
+    setCoffesCart(Newcoffes);
+  }
+  function removeCoffe(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    const idCoffee = parseInt(event.currentTarget.value);
+
+    const Newcoffes = coffesCart.filter((coffee) => {
+      if (idCoffee === coffee.id) coffee.amount = 0;
+
+      if (idCoffee != coffee.id) return coffee;
+    });
+
+    setCoffesCart(Newcoffes);
+  }
 
   return (
     <CheckoutContainer>
@@ -102,36 +138,52 @@ export function Checkout() {
           <h4>Cafés selecionados</h4>
           <div className="container">
             <div className="cart_list">
-              {coffesCart.map((coffee) => {
-                return (
-                  <CardCoffe>
-                    <div className="left">
-                      <div className="imgCoffee">
-                        <img src={coffee.photo} />
-                      </div>
-                      <div className="info">
-                        <span>{coffee.name}</span>
-                        <div className="cart">
-                          <div className="units">
-                            <button>
-                              <Minus size={14} weight="bold" />
-                            </button>
-                            <span>{coffee.amount}</span>
-                            <button>
-                              <Plus size={14} weight="bold" />
+              {coffesCart.length > 0 ? (
+                coffesCart.map((coffee) => {
+                  return (
+                    <CardCoffe>
+                      <div className="left">
+                        <div className="imgCoffee">
+                          <img src={coffee.photo} />
+                        </div>
+                        <div className="info">
+                          <span>{coffee.name}</span>
+                          <div className="cart">
+                            <div className="units">
+                              <button
+                                type="button"
+                                onClick={subAmount}
+                                value={coffee.id}
+                              >
+                                <Minus size={14} weight="bold" />
+                              </button>
+                              <span>{coffee.amount}</span>
+                              <button
+                                type="button"
+                                onClick={addAmount}
+                                value={coffee.id}
+                              >
+                                <Plus size={14} weight="bold" />
+                              </button>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={removeCoffe}
+                              value={coffee.id}
+                            >
+                              <Trash size={16} />
+                              Remover
                             </button>
                           </div>
-                          <button>
-                            <Trash size={16} />
-                            Remover
-                          </button>
                         </div>
                       </div>
-                    </div>
-                    <strong>{coffee.value}</strong>
-                  </CardCoffe>
-                );
-              })}
+                      <strong>{coffee.value}</strong>
+                    </CardCoffe>
+                  );
+                })
+              ) : (
+                <EmptyCart />
+              )}
             </div>
             <div className="totais">
               <div className="totais_line">
@@ -147,7 +199,13 @@ export function Checkout() {
                 <strong>R$ 33,20</strong>
               </div>
             </div>
-            <button>CONFIRMAR PEDIDO</button>
+            {coffesCart.length > 0 ? (
+              <button type="submit">CONFIRMAR PEDIDO</button>
+            ) : (
+              <button type="submit" disabled>
+                CARRINHO VAZIO
+              </button>
+            )}
           </div>
         </div>
       </div>

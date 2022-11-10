@@ -131,9 +131,9 @@ export function Home() {
                         <Plus size={14} weight="bold" />
                       </button>
                     </div>
-                    <button className="add_to_cart">
+                    {/* <button className="add_to_cart">
                       <ShoppingCartSimple size={22} weight="fill" />
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               </CoffeeCard>

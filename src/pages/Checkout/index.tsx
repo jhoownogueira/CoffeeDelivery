@@ -11,12 +11,15 @@ import {
 } from "phosphor-react";
 import { CardCoffe, CheckoutContainer } from "./styles";
 
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CoffesContext } from "../../contexts/CoffesContext";
 import { EmptyCart } from "../../components/EmptyCart";
 
 export function Checkout() {
   const { coffesCart, setCoffesCart } = useContext(CoffesContext);
+  const [valorItensCart, setValorItensCart] = useState(0);
+  const [valorFrete, setValorFrete] = useState(5);
+  const [valorTotalCart, setValorTotalCart] = useState(0);
 
   function addAmount(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     const idCoffee = parseInt(event.currentTarget.value);
@@ -53,6 +56,18 @@ export function Checkout() {
 
     setCoffesCart(Newcoffes);
   }
+
+  useEffect(() => {
+    setValorTotalCart(valorFrete + valorItensCart);
+  }, [coffesCart]);
+
+  useEffect(() => {
+    const calculoTotal = coffesCart.reduce(
+      (total, coffee) => (total += coffee.amount * coffee.value),
+      0
+    );
+    setValorItensCart(calculoTotal);
+  }, [coffesCart]);
 
   return (
     <CheckoutContainer>
@@ -177,7 +192,9 @@ export function Checkout() {
                           </div>
                         </div>
                       </div>
-                      <strong>{coffee.value}</strong>
+                      <strong>
+                        {(coffee.value * coffee.amount).toFixed(2)}
+                      </strong>
                     </CardCoffe>
                   );
                 })
@@ -188,15 +205,15 @@ export function Checkout() {
             <div className="totais">
               <div className="totais_line">
                 <span>Total de itens</span>
-                <p>R$ 29,70</p>
+                <p>{valorItensCart}</p>
               </div>
               <div className="totais_line">
                 <span>Entrega</span>
-                <p>R$ 3,50</p>
+                <p>{valorFrete}</p>
               </div>
               <div className="totais_line">
                 <strong>Total</strong>
-                <strong>R$ 33,20</strong>
+                <strong>{valorTotalCart}</strong>
               </div>
             </div>
             {coffesCart.length > 0 ? (

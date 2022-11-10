@@ -59,7 +59,7 @@ export function Checkout() {
 
   useEffect(() => {
     setValorTotalCart(valorFrete + valorItensCart);
-  }, [coffesCart]);
+  }, [coffesCart, valorFrete, valorItensCart]);
 
   useEffect(() => {
     const calculoTotal = coffesCart.reduce(

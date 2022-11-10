@@ -11,7 +11,9 @@ export function Header() {
   return (
     <HeaderContainer>
       <div className="grid">
-        <img src={logoImg} />
+        <NavLink to="/">
+          <img src={logoImg} />
+        </NavLink>
         <nav>
           <Locale>
             <MapPin size={22} weight="fill" />

@@ -1,3 +1,10 @@
+import { useContext, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import InputMask from "react-input-mask";
+import axios from "axios";
+import Swal from "sweetalert2";
+import { CoffesContext } from "../../contexts/CoffesContext";
+import { EmptyCart } from "../../components/EmptyCart";
 import {
   Bank,
   CreditCard,
@@ -6,20 +13,22 @@ import {
   Minus,
   Money,
   Plus,
-  ShoppingCartSimple,
   Trash,
 } from "phosphor-react";
 import { CardCoffe, CheckoutContainer } from "./styles";
-
-import { useContext, useEffect, useState } from "react";
-import { CoffesContext } from "../../contexts/CoffesContext";
-import { EmptyCart } from "../../components/EmptyCart";
 
 export function Checkout() {
   const { coffesCart, setCoffesCart } = useContext(CoffesContext);
   const [valorItensCart, setValorItensCart] = useState(0);
   const [valorFrete, setValorFrete] = useState(5);
   const [valorTotalCart, setValorTotalCart] = useState(0);
+
+  const { register, handleSubmit, watch, setValue } = useForm();
+
+  register("cep", {
+    onBlur: consultaCep,
+  });
+  const cepInformado = watch("cep");
 
   function addAmount(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     const idCoffee = parseInt(event.currentTarget.value);
@@ -56,6 +65,37 @@ export function Checkout() {
 
     setCoffesCart(Newcoffes);
   }
+  function handleCreateNewOrder(data: any) {
+    const pedidoFechado = Object.assign({ coffesCart }, data);
+    console.log(pedidoFechado);
+  }
+
+  function consultaCep() {
+    if (cepInformado.length > 0) {
+      axios({
+        method: "get",
+        url: `https://viacep.com.br/ws/${cepInformado.replace("-", "")}/json/`,
+      })
+        .catch((error) => {
+          Swal.fire({
+            icon: "error",
+            title: "CEP inválido",
+          });
+        })
+        .then((response: any) => {
+          if (response.data.erro === true) {
+            Swal.fire({
+              icon: "error",
+              title: "CEP inválido",
+            });
+          }
+          setValue("rua", response.data.logradouro);
+          setValue("bairro", response.data.bairro);
+          setValue("cidade", response.data.localidade);
+          setValue("uf", response.data.uf);
+        });
+    }
+  }
 
   useEffect(() => {
     setValorTotalCart(valorFrete + valorItensCart);
@@ -70,7 +110,7 @@ export function Checkout() {
   }, [coffesCart]);
 
   return (
-    <CheckoutContainer>
+    <CheckoutContainer onSubmit={handleSubmit(handleCreateNewOrder)}>
       <div className="grid">
         <div className="left_container">
           <h4>Complete seu pedido</h4>
@@ -84,33 +124,73 @@ export function Checkout() {
             </div>
             <div className="container_inputs">
               <div className="field">
-                <input type="text" id="cep" placeholder="CEP" />
+                <InputMask
+                  required
+                  mask="99999-999"
+                  maskChar={null}
+                  type="text"
+                  id="cep"
+                  placeholder="CEP"
+                  {...register("cep")}
+                />
               </div>
               <div className="field">
-                <input type="text" id="rua" placeholder="RUA" />
+                <input
+                  required
+                  type="text"
+                  id="rua"
+                  placeholder="RUA"
+                  {...register("rua")}
+                />
               </div>
               <div className="field_group">
                 <div className="field">
-                  <input type="text" id="numero" placeholder="Número" />
+                  <input
+                    required
+                    type="text"
+                    id="numero"
+                    placeholder="Número"
+                    {...register("numero")}
+                  />
                 </div>
                 <div className="field">
                   <input
                     type="text"
                     id="complemento"
                     placeholder="Complemento"
+                    {...register("complemento")}
                   />
                   <label htmlFor="complemento">Opcional</label>
                 </div>
               </div>
               <div className="field_group">
                 <div className="field">
-                  <input type="text" id="bairro" placeholder="Bairro" />
+                  <input
+                    required
+                    type="text"
+                    id="bairro"
+                    placeholder="Bairro"
+                    {...register("bairro")}
+                  />
                 </div>
                 <div className="field">
-                  <input type="text" id="cidade" placeholder="Cidade" />
+                  <input
+                    required
+                    type="text"
+                    id="cidade"
+                    placeholder="Cidade"
+                    {...register("cidade")}
+                  />
                 </div>
                 <div className="field">
-                  <input type="text" id="uf" placeholder="UF" />
+                  <input
+                    required
+                    maxLength={2}
+                    type="text"
+                    id="uf"
+                    placeholder="UF"
+                    {...register("uf")}
+                  />
                 </div>
               </div>
             </div>
@@ -125,21 +205,39 @@ export function Checkout() {
               </div>
             </div>
             <div className="container_payment">
-              <input type="radio" name="payment" id="credito" />
+              <input
+                required
+                type="radio"
+                id="credito"
+                value="credito"
+                {...register("payment")}
+              />
               <label htmlFor="credito">
                 <div className="content">
                   <CreditCard size={16} />
                   CARTÃO DE CRÉDITO
                 </div>
               </label>
-              <input type="radio" name="payment" id="debito" />
+              <input
+                required
+                type="radio"
+                id="debito"
+                value="debito"
+                {...register("payment")}
+              />
               <label htmlFor="debito">
                 <div className="content">
                   <Bank size={16} />
                   CARTÃO DE DÉBITO
                 </div>
               </label>
-              <input type="radio" name="payment" id="dinheiro" />
+              <input
+                required
+                type="radio"
+                id="dinheiro"
+                value="dinheiro"
+                {...register("payment")}
+              />
               <label htmlFor="dinheiro">
                 <div className="content">
                   <Money size={16} />

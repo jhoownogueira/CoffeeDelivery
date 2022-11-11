@@ -193,7 +193,11 @@ export function Checkout() {
                         </div>
                       </div>
                       <strong>
-                        {(coffee.value * coffee.amount).toFixed(2)}
+                        {new Intl.NumberFormat("pt-BR", {
+                          style: "currency",
+                          currency: "BRL",
+                          minimumFractionDigits: 2,
+                        }).format(coffee.value * coffee.amount)}
                       </strong>
                     </CardCoffe>
                   );
@@ -205,15 +209,33 @@ export function Checkout() {
             <div className="totais">
               <div className="totais_line">
                 <span>Total de itens</span>
-                <p>{valorItensCart}</p>
+                <p>
+                  {new Intl.NumberFormat("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                    minimumFractionDigits: 2,
+                  }).format(valorItensCart)}
+                </p>
               </div>
               <div className="totais_line">
                 <span>Entrega</span>
-                <p>{valorFrete}</p>
+                <p>
+                  {new Intl.NumberFormat("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                    minimumFractionDigits: 2,
+                  }).format(valorFrete)}
+                </p>
               </div>
               <div className="totais_line">
                 <strong>Total</strong>
-                <strong>{valorTotalCart}</strong>
+                <strong>
+                  {new Intl.NumberFormat("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                    minimumFractionDigits: 2,
+                  }).format(valorTotalCart)}
+                </strong>
               </div>
             </div>
             {coffesCart.length > 0 ? (

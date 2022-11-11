@@ -119,7 +119,11 @@ export function Home() {
                 <div className="coffe_card_bottom">
                   <div className="price">
                     <span>R$</span>
-                    <strong>{parseFloat(coffe.value.toFixed(2))}</strong>
+                    <strong>
+                      {new Intl.NumberFormat("pt-BR", {
+                        minimumFractionDigits: 2,
+                      }).format(coffe.value)}
+                    </strong>
                   </div>
                   <div className="cart">
                     <div className="units">

@@ -16,12 +16,14 @@ import {
   Trash,
 } from "phosphor-react";
 import { CardCoffe, CheckoutContainer } from "./styles";
+import { useNavigate } from "react-router-dom";
 
 export function Checkout() {
   const { coffesCart, setCoffesCart } = useContext(CoffesContext);
   const [valorItensCart, setValorItensCart] = useState(0);
   const [valorFrete, setValorFrete] = useState(5);
   const [valorTotalCart, setValorTotalCart] = useState(0);
+  const navigate = useNavigate();
 
   const { register, handleSubmit, watch, setValue } = useForm();
 
@@ -68,6 +70,7 @@ export function Checkout() {
   function handleCreateNewOrder(data: any) {
     const pedidoFechado = Object.assign({ coffesCart }, data);
     console.log(pedidoFechado);
+    navigate("/success");
   }
 
   function consultaCep() {

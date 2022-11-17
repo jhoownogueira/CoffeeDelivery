@@ -130,6 +130,7 @@ export const CheckoutContainer = styled.form`
             border-radius: 6px;
             border: 1px solid transparent;
             background: ${(props) => props.theme["base-button"]};
+            cursor: pointer;
             transition: all 0.2s;
 
             .content {

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const SuccessContainer = styled.section`
-    width: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -62,6 +62,21 @@ export const SuccessContainer = styled.section`
     .right {
         width: 100%;
         max-width: 30.75rem;
+    }
+  }
+
+  .go_to_home {
+    width: 100%;
+    max-width: 72rem;
+    padding: 0 1rem;
+    margin-top: 3rem;
+    color: ${props => props.theme["base-text"]};
+    font-size: 1rem;
+    background: transparent;
+
+    border: 1px solid transparent;
+    &:hover {
+        color: ${props => props.theme["primary-color"]};
     }
   }
 `

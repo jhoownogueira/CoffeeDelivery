@@ -17,12 +17,15 @@ import {
 } from "phosphor-react";
 import { CardCoffe, CheckoutContainer } from "./styles";
 import { useNavigate } from "react-router-dom";
+import { CheckoutContext } from "../../contexts/CheckoutContext";
 
 export function Checkout() {
   const { coffesCart, setCoffesCart } = useContext(CoffesContext);
+  const { setCheckout } = useContext(CheckoutContext);
   const [valorItensCart, setValorItensCart] = useState(0);
   const [valorFrete, setValorFrete] = useState(5);
   const [valorTotalCart, setValorTotalCart] = useState(0);
+
   const navigate = useNavigate();
 
   const { register, handleSubmit, watch, setValue } = useForm();
@@ -69,7 +72,7 @@ export function Checkout() {
   }
   function handleCreateNewOrder(data: any) {
     const pedidoFechado = Object.assign({ coffesCart }, data);
-    console.log(pedidoFechado);
+    setCheckout(pedidoFechado);
     navigate("/success");
   }
 
@@ -212,7 +215,8 @@ export function Checkout() {
                 required
                 type="radio"
                 id="credito"
-                value="credito"
+                value="Cartão de crédito"
+                defaultChecked
                 {...register("payment")}
               />
               <label htmlFor="credito">
@@ -225,7 +229,7 @@ export function Checkout() {
                 required
                 type="radio"
                 id="debito"
-                value="debito"
+                value="Cartão de débito"
                 {...register("payment")}
               />
               <label htmlFor="debito">
@@ -238,7 +242,7 @@ export function Checkout() {
                 required
                 type="radio"
                 id="dinheiro"
-                value="dinheiro"
+                value="Dinheiro"
                 {...register("payment")}
               />
               <label htmlFor="dinheiro">
@@ -257,7 +261,7 @@ export function Checkout() {
               {coffesCart.length > 0 ? (
                 coffesCart.map((coffee) => {
                   return (
-                    <CardCoffe>
+                    <CardCoffe key={coffee.id}>
                       <div className="left">
                         <div className="imgCoffee">
                           <img src={coffee.photo} />

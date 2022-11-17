@@ -105,7 +105,7 @@ export function Home() {
         <div className="coffees_grid">
           {coffesList.map((coffe) => {
             return (
-              <CoffeeCard>
+              <CoffeeCard key={coffe.id}>
                 <div className="imgCoffee">
                   <img src={coffe.photo} alt={coffe.name} />
                 </div>

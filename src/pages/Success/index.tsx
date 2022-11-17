@@ -1,8 +1,18 @@
 import { CurrencyDollar, MapPin, Timer } from "phosphor-react";
 import { Icon, SuccessContainer } from "./styles";
 import deliveryImg from "../../assets/success-delivery.png";
+import { CheckoutContext } from "../../contexts/CheckoutContext";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 export function Success() {
+  const { checkout } = useContext(CheckoutContext);
+  const navigate = useNavigate();
+
+  function handleReturnToHome() {
+    navigate("/");
+  }
+
   return (
     <SuccessContainer>
       <div className="grid">
@@ -16,9 +26,14 @@ export function Success() {
               </Icon>
               <div className="info">
                 <p>
-                  Entrega em <strong>Rua João Daniel Martinelli, 102</strong>
+                  Entrega em{" "}
+                  <strong>
+                    {checkout!.rua}, {checkout!.numero}
+                  </strong>
                 </p>
-                <p>Farrapos - Porto Alegre, RS</p>
+                <p>
+                  {checkout!.bairro} - {checkout!.cidade}, {checkout!.uf}
+                </p>
               </div>
             </div>
             <div className="line">
@@ -36,7 +51,7 @@ export function Success() {
               </Icon>
               <div className="info">
                 <p>Pagamento na entrega</p>
-                <strong>Cartão de Crédito</strong>
+                <strong>{checkout!.payment}</strong>
               </div>
             </div>
           </div>
@@ -47,6 +62,9 @@ export function Success() {
           </div>
         </div>
       </div>
+      <button onClick={handleReturnToHome} className="go_to_home">
+        Voltar para página inicial
+      </button>
     </SuccessContainer>
   );
 }
